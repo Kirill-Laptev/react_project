@@ -1,20 +1,25 @@
 import React from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
+import { addPostActionCreator, postChangeActionCreator } from '../../../redux/state';
 
 
-const MyPosts = (props) => {
+
+
+
+const MyPosts =  (props) => {
 
   let addNewPost = React.createRef();
 
   let addPost = () => {
-    props.dispatch({type: 'ADD-POST'});       
+    props.dispatch(addPostActionCreator()); // Можем передать напрямую    
   };
 
 
   let postChange = () => {
     let text = addNewPost.current.value; 
-    props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text});
+    let action = postChangeActionCreator(text);  // Можно записать функцию в переменную
+    props.dispatch(action);
   }
 
 
