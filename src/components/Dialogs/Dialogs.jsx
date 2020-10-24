@@ -7,11 +7,11 @@ import MessageArea from './MessageArea/MessageArea';
 const Dialogs = (props) => {
 
 
-  let dialogsElements = props.state.dialogsData.map((el) => {
+  let dialogsElements = props.state.dialogsPage.dialogsData.map((el) => {
     return <DialogItem name={el.name} id={el.id} />;
   });
 
-  let messagesElements = props.state.messagesData.map((el) => {
+  let messagesElements = props.state.dialogsPage.messagesData.map((el) => {
     return <Message text={el.text} />;
   });
 
@@ -22,9 +22,8 @@ const Dialogs = (props) => {
       <div className={classes.dialogs__items}>{dialogsElements}</div>
       <div className={classes.dialogs__messages}>{messagesElements}</div>
       <MessageArea 
-      addDialogsPost={props.addDialogsPost} 
-      updateDialogsPostText={props.updateDialogsPostText}
-      newPostText={props.dialogsPage.newPostText}/>
+      dispatch={props.dispatch}
+      newPostText={props.state.newPostText}/>
     </div>
   );
 

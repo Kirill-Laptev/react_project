@@ -1,5 +1,7 @@
 const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const ADD_DIALOGS_POST = 'ADD-DIALOGS-POST';
+const UPDATE_DIALOGS_POST_TEXT = 'UPDATE-DIALOGS-POST-TEXT';
 
 
 
@@ -52,20 +54,6 @@ let store = {
     this._rerenderEntireTree = observer;
   },
 
-  addDialogsPost(postMessage) {
-    let newPost = {
-      text: postMessage,
-    };
-
-    this._state.dialogsPage.messagesData.push(newPost);
-    this._rerenderEntireTree(this._state);
-  },
-
-  updateDialogsPostText(newText) {
-    this._state.dialogsPage.newPostText = newText;
-    this._rerenderEntireTree(this._state);
-  },
-
   dispatch(action) {
     if (action.type === ADD_POST) {
       let newPost = {
@@ -78,6 +66,17 @@ let store = {
 
     } else if (action.type === UPDATE_NEW_POST_TEXT) {
       this._state.profilePage.newPostText = action.newText;
+      this._rerenderEntireTree(this._state);
+    } else if (action.type === ADD_DIALOGS_POST){
+      let newPost = {
+        text: this._state.dialogsPage.newPostText,
+      };
+  
+      this._state.dialogsPage.messagesData.push(newPost);
+      this._state.dialogsPage.newPostText = '';
+      this._rerenderEntireTree(this._state);
+    } else if (action.type === UPDATE_DIALOGS_POST_TEXT){
+      this._state.dialogsPage.newPostText = action.newText;
       this._rerenderEntireTree(this._state);
     }
   },
@@ -94,8 +93,13 @@ export const postChangeActionCreator = (text) => {
   return {type: UPDATE_NEW_POST_TEXT, newText: text}
 }
 
+export const addDialogsPostActionCreator = () => {
+  return {type: ADD_DIALOGS_POST}
+}
 
-
+export const updateDialogsPostTextActionCreator = (text) => {
+  return {type: UPDATE_DIALOGS_POST_TEXT, newText: text}
+}
 
 
 window.store = store;

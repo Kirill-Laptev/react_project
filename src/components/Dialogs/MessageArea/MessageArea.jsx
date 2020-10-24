@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './MessageArea.module.css';
+import { addDialogsPostActionCreator, updateDialogsPostTextActionCreator } from '../../../redux/state';
 
 const MessageArea = (props) => {
 
@@ -7,14 +8,12 @@ const MessageArea = (props) => {
 
   let postMessage = () => {
       let text = addNewPost.current.value;
-      props.addDialogsPost(text);
-      addNewPost.current.value = '';
+      props.dispatch(addDialogsPostActionCreator(text));
   }
 
   let changePost = () => {
     let text = addNewPost.current.value;
-    props.updateDialogsPostText(text);
-    addNewPost.current.value = '';
+    props.dispatch(updateDialogsPostTextActionCreator(text));
   }
 
 
