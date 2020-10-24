@@ -1,0 +1,9 @@
+
+.header{
+    grid-area: h;  /* Задаем имена для классов, чтобы сказать главному wrapper, как спозиционировать 
+                      эти элементы */
+    background-color: green;
+  }
+  .header img{
+    width: 40px;
+  }

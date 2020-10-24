@@ -1,0 +1,13 @@
+.friends{
+    
+}
+
+.friends__title{
+    padding: 50px 0 10px 0;
+    text-align: center;
+    font-size : 20px;
+}
+
+.friends__items{
+    display: flex;
+}

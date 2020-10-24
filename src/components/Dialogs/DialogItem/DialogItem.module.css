@@ -1,0 +1,13 @@
+.dialog a{
+    color: white;
+    text-decoration: none;
+}
+
+.dialog.active a{
+    color: gold;
+}
+
+.dialog img{
+    width: 40px;
+    border-radius: 50%;
+}
