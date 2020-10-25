@@ -1,6 +1,7 @@
 import React from 'react';
 import classes from './MessageArea.module.css';
-import { addDialogsPostActionCreator, updateDialogsPostTextActionCreator } from '../../../redux/state';
+import { addDialogsPostActionCreator, updateDialogsPostTextActionCreator } from '../../../redux/dialogsReducer';
+
 
 const MessageArea = (props) => {
 
