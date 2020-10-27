@@ -23,7 +23,7 @@ const Dialogs = (props) => {
       <div className={classes.dialogs__messages}>{messagesElements}</div>
       <MessageArea 
       dispatch={props.dispatch}
-      newPostText={props.state.newPostText}/>
+      newPostText={props.state.dialogsPage.newPostText}/>
     </div>
   );
 
