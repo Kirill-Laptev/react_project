@@ -1,27 +1,26 @@
 import React from 'react';
-import classes from './MessageArea.module.css';
-import { addDialogsPostActionCreator, updateDialogsPostTextActionCreator } from '../../../redux/dialogsReducer';
 
 
 const MessageArea = (props) => {
 
   let addNewPost = React.createRef();
 
-  let postMessage = () => {
-      let text = addNewPost.current.value;
-      props.dispatch(addDialogsPostActionCreator(text));
+
+  let onChangePost = () => {
+    let text = addNewPost.current.value;
+    props.changePost(text);
   }
 
-  let changePost = () => {
-    let text = addNewPost.current.value;
-    props.dispatch(updateDialogsPostTextActionCreator(text));
+  let onPostMessage = () => {
+    props.postMessage();
   }
+
 
 
     return (
         <div>
-            <textarea ref={addNewPost} onChange={changePost} value={props.newPostText}></textarea>
-            <button onClick={postMessage}>Отправить</button>
+            <textarea ref={addNewPost} onChange={onChangePost} value={props.newPostText}></textarea>
+            <button onClick={onPostMessage}>Отправить</button>
         </div>
     )
 }
