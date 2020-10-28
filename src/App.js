@@ -20,6 +20,7 @@ const App = (props) => {
           store={props.store}
            /> } />
           <Route path='/profile' render={ () => <Profile 
+          
            /> } />
           <Route path='/music' component={Music} />
           <Route path='/news' component={News} />

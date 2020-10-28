@@ -1,33 +1,28 @@
 import React from 'react';
 import { addDialogsPostActionCreator, updateDialogsPostTextActionCreator } from '../../../redux/dialogsReducer';
 import MessageArea from './MessageArea';
-import StoreContext from '../../../StoreContext';
+import { connect } from 'react-redux';
 
 
-const MessageAreaContainer = (props) => {
-  return (
-    <StoreContext.Consumer>
-      {(store) => {
-        let state = store.getState();
 
-        let postMessage = () => {
-          store.dispatch(addDialogsPostActionCreator());
-        };
+const mapStateToProps = (state) => {
+  return {
+    newPostText: state.dialogsPage.newPostText
+  }
+}
 
-        let changePost = (text) => {
-          store.dispatch(updateDialogsPostTextActionCreator(text));
-        };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    changePost: (text) => {
+      dispatch(updateDialogsPostTextActionCreator(text));
+    },
+    postMessage: () => {
+      dispatch(addDialogsPostActionCreator());
+    }
+  }
+}
 
-        return (
-          <MessageArea
-            postMessage={postMessage}
-            changePost={changePost}
-            newPostText={state.dialogsPage.newPostText}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  );
-};
+const MessageAreaContainer = connect(mapStateToProps, mapDispatchToProps)(MessageArea);
+
 
 export default MessageAreaContainer;
