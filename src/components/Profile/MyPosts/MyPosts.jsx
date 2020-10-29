@@ -8,21 +8,21 @@ const MyPosts = (props) => {
 
   let addNewPost = React.createRef();
 
-  let onAddPost = () => {
-    props.addPost();  
-  };
-
-
+  
   let onPostChange = () => {
     let text = addNewPost.current.value; 
     props.updateNewPostText(text);
   }
+  
+  let onAddPost = () => {
+    props.addPost();  
+  };
 
-
-
+  
   let postsElements = props.posts.map((el) => {
     return <Post message={el.message} likeCounts={el.likeCounts} />
   });
+  
 
   return (
     <div className={classes.myposts}>
