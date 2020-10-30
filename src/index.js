@@ -8,10 +8,6 @@ import store from './redux/redux-store';
 import { Provider } from 'react-redux';
 
 
-
-
-
-const rerenderEntireTree = (state) => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
@@ -22,11 +18,9 @@ const rerenderEntireTree = (state) => {
     </React.StrictMode>,
     document.getElementById("root")
   );
-};
 
-rerenderEntireTree(store.getState());  
 
-store.subscribe(rerenderEntireTree);
+
 
 
 // If you want your app to work offline and load faster, you can change
