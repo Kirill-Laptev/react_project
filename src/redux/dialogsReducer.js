@@ -21,20 +21,31 @@ let initialState = {
   newPostText: "Hello",
 };
 
+
+
 const dialogsReducer = (state = initialState, action) => {
+
+
   switch (action.type) {
-    case ADD_DIALOGS_POST:  // Функция при клике на кнопку, добавляющая новый пост
-      let newPost = {
-        text: state.newPostText,
+
+    case UPDATE_DIALOGS_POST_TEXT:   
+
+      return {
+        ...state,
+        newPostText: action.newText
       };
 
-      state.messagesData.push(newPost);
-      state.newPostText = "";
-      return state;
+    case ADD_DIALOGS_POST: 
 
-    case UPDATE_DIALOGS_POST_TEXT:   // Функция добавляющая в state по 1-ой букве
-      state.newPostText = action.newText;
-      return state;
+    let newPost = state.newPostText;
+
+    return {
+      ...state,
+      newPostText: '',
+      messagesData: [...state.messagesData, {text: newPost}],  
+
+    }
+
 
     default:
       return state;
