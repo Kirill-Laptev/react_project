@@ -1,14 +1,20 @@
 import React from 'react';
 import classes from './Users.module.css';
+import * as axios from 'axios';
+import userPhoto from '../../temp/image/user.png'
 
 const Users = (props) => {
 
-    if(props.usersData.length === 0){
-        props.setUsers([{id: 1, photoUrl: 'https://www.verwin.com/assets/images/user-avatar.png', followed: false, name: 'Dmitry K.', status: "I'am looking for a Job right now...", location: {country: 'Belarus', city: 'Minsk'}},
-        {id: 2, photoUrl: 'https://www.verwin.com/assets/images/user-avatar.png', followed: false, name: 'Svetlana D.', status: "I'am so pretty", location: {country: 'Belarus', city: 'Minsk'}},
-        {id: 3, photoUrl: 'https://www.verwin.com/assets/images/user-avatar.png', followed: true, name: 'Sergei S.', status: "I like footbal", location: {country: 'Ukraine', city: 'Kiev'}},
-        {id: 4, photoUrl: 'https://www.verwin.com/assets/images/user-avatar.png', followed: true, name: 'Andrew T.', status: "I can help you create good video promotion", location: {country: 'USA', city: 'Philadelphia'}}]);
+    const getUsers = () => {
+        if(props.usersData.length === 0){
+
+            axios.get('https://social-network.samuraijs.com/api/1.0/users').then((response) => {
+                props.setUsers(response.data.items);
+        })
     }
+}
+
+    
 
 
 
@@ -16,7 +22,7 @@ const Users = (props) => {
     return <div>
         <span>
             <div>
-                <img className={classes.userPhoto} src={user.photoUrl} />
+                <img className={classes.userPhoto} src={user.photos.small ? user.photos.small : userPhoto} />
                 <div>
                 {user.followed ? <button onClick={ () => props.unfollow(user.id)}>Unfollow</button> : 
                 <button onClick={ () => props.follow(user.id)}>Follow</button> }                
@@ -27,17 +33,19 @@ const Users = (props) => {
         <div>{user.name}</div>
         <div>{user.status}</div>
     <span>
-        <div>{user.location.country}</div>
-        <div>{user.location.city}</div>
+        <div>{'user.location.country'}</div>
+        <div>{'user.location.city'}</div>
     </span>
         </span>
     </div>
     })
 
 
-
     return (
+        <div>
+        <button onClick={getUsers}>Get Users</button>
         <div>{blockElements}</div>
+        </div>
     )
 }
 
