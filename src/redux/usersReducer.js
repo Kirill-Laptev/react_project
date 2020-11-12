@@ -47,7 +47,7 @@ const usersReducer = (state = initialState, action) => {
             
         return {
             ...state,
-            usersData: [...state.usersData, ...action.users],
+            usersData: [...action.users],
         
         }    
         
