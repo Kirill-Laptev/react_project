@@ -8,7 +8,7 @@ const UsersFunc = (props) => {
 
     let pages = [];
 
-    for(let i = 1; i <= pagesCount; i++){
+    for(let i = 1; i <= 20; i++){  // Временно выводим 20 страниц
       pages.push(i);
     }
 
@@ -17,7 +17,7 @@ const UsersFunc = (props) => {
       <div>
        {pages.map((page) => {
           return <span className={props.currentPage === page ? styles.selectedPage : ''}
-          onClick={ () => {props.onPageChanged(page)}}>{page}</span>
+          onClick={ () => {props.onPageChanged(page)}}>{page + ' '}</span>
         })}
       </div>
         

@@ -1,17 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { followAC, unfollowAC, setUsersAC, setCurrentPageAC, setTotalUsersCountAC } from '../../redux/usersReducer';
+import { followAC, unfollowAC, setUsersAC, setCurrentPageAC, setTotalUsersCountAC, toggleIsLoadingsAC } from '../../redux/usersReducer';
 import * as axios from 'axios';
 import UsersFunc from './UsersFunc';
+import Preloader from '../common/Preloader/Preloader';
 
 
 class UsersComponentAPI extends React.Component {
   
   
     componentDidMount() {
+        this.props.toggleIsLoading(true);
     axios
       .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
       .then((response) => {
+        this.props.toggleIsLoading(false);
         this.props.setUsers(response.data.items);
         this.props.setTotalUsersCount(response.data.totalCount);
       });
@@ -20,16 +23,21 @@ class UsersComponentAPI extends React.Component {
 
   onPageChanged = (pageNumber) => {
     this.props.setCurrentPage(pageNumber);
+    this.props.toggleIsLoading(true);
     axios
       .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
       .then((response) => {
+        this.props.toggleIsLoading(false);
         this.props.setUsers(response.data.items);
       });
   }
 
 
   render() {
-   return  <UsersFunc 
+      
+   return  <>
+   {this.props.isLoading ? <Preloader /> : null}
+   <UsersFunc 
     totalUsersCount={this.props.totalUsersCount}
     pageSize={this.props.pageSize}
     currentPage={this.props.currentPage}
@@ -37,7 +45,9 @@ class UsersComponentAPI extends React.Component {
     usersData={this.props.usersData}
     unfollow={this.props.unfollow}
     follow={this.props.follow}
+    isLoading={this.props.isLoading}
      />
+      </>
   } 
 }
 
@@ -49,6 +59,7 @@ let mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
+        isLoading: state.usersPage.isLoading,
     }
 }
 
@@ -69,7 +80,10 @@ let mapDispatchToProps = (dispatch) => {
         },
         setTotalUsersCount: (totalCount) => {
             dispatch(setTotalUsersCountAC(totalCount))
-        }
+        },
+        toggleIsLoading: (isLoading) => {
+            dispatch(toggleIsLoadingsAC(isLoading));
+        },
     }
 }
 
