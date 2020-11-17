@@ -1,6 +1,6 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET-USERS';
+const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_LOADING = 'TOGGLE_IS_LOADING';
@@ -84,27 +84,27 @@ const usersReducer = (state = initialState, action) => {
 
 
 export const follow = (userID) => {
-    return {type: 'FOLLOW', userID}
+    return {type: FOLLOW, userID}
 }
 
 export const unfollow = (userID) => {
-    return {type: 'UNFOLLOW', userID}
+    return {type: UNFOLLOW, userID}
 }
 
 export const setUsers = (users) => {
-    return {type: 'SET-USERS', users}
+    return {type: SET_USERS, users}
 } 
 
 export const setCurrentPage = (pageNumber) => {
-    return {type: 'SET_CURRENT_PAGE', currentPage: pageNumber}
+    return {type: SET_CURRENT_PAGE, currentPage: pageNumber}
 }
 
 export const setTotalUsersCount = (totalCount) => {
-    return {type: 'SET_TOTAL_USERS_COUNT', totalUsersCount: totalCount}
+    return {type: SET_TOTAL_USERS_COUNT, totalUsersCount: totalCount}
 }
 
 export const toggleIsLoading = (isLoading) => {
-    return {type: 'TOGGLE_IS_LOADING', isLoading: isLoading}
+    return {type: TOGGLE_IS_LOADING, isLoading: isLoading}
 }
 
 export default usersReducer;
