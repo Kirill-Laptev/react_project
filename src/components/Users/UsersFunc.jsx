@@ -9,7 +9,7 @@ const UsersFunc = (props) => {
 
     let pages = [];
 
-    for(let i = 1; i <= 20; i++){  // Временно выводим 20 страниц
+    for(let i = 1; i <= 1000; i++){  // Временно выводим 20 страниц
       pages.push(i);
     }
 
