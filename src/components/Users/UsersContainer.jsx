@@ -4,6 +4,8 @@ import { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleI
 import * as axios from 'axios';
 import UsersFunc from './UsersFunc';
 import Preloader from '../common/Preloader/Preloader';
+import { usersAPI } from '../../api/api';
+
 
 
 class UsersComponentAPI extends React.Component {
@@ -11,13 +13,11 @@ class UsersComponentAPI extends React.Component {
   
     componentDidMount() {
         this.props.toggleIsLoading(true);
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-      {withCredentials: true})
-      .then((response) => {
+    
+      usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((response) => {
         this.props.toggleIsLoading(false);
-        this.props.setUsers(response.data.items);
-        this.props.setTotalUsersCount(response.data.totalCount);
+        this.props.setUsers(response.items);
+        this.props.setTotalUsersCount(response.totalCount);
       });
   }
 
@@ -25,12 +25,10 @@ class UsersComponentAPI extends React.Component {
   onPageChanged = (pageNumber) => {
     this.props.setCurrentPage(pageNumber);
     this.props.toggleIsLoading(true);
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,
-      {withCredentials: true})
-      .then((response) => {
+    
+    usersAPI.getUsers(pageNumber, this.props.pageSize).then((response) => {
         this.props.toggleIsLoading(false);
-        this.props.setUsers(response.data.items);
+        this.props.setUsers(response.items);
       });
   }
 
