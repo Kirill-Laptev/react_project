@@ -4,6 +4,7 @@ const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 const TOGGLE_IS_LOADING = 'TOGGLE_IS_LOADING';
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 
 
 let initialState = {
@@ -11,7 +12,8 @@ let initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    isLoading : true,
+    isLoading: true,
+    followingInProgress: [],
 };
 
 
@@ -73,6 +75,15 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: action.isLoading
             }
+
+        case TOGGLE_IS_FOLLOWING_PROGRESS :
+            return {
+                ...state,
+                followingInProgress: action.isLoading 
+                ? [...state.followingInProgress, action.userID]
+                : state.followingInProgress.filter(id => id != action.userID)  // Фильтрация вернет новую копию массива, 
+                                                                               // поэтому не нужна деструктуризация state
+            }
         
         default:
             return state;
@@ -105,6 +116,10 @@ export const setTotalUsersCount = (totalCount) => {
 
 export const toggleIsLoading = (isLoading) => {
     return {type: TOGGLE_IS_LOADING, isLoading: isLoading}
+}
+
+export const toggleFollowingProgress = (isLoading, userID) => {
+    return {type: TOGGLE_IS_FOLLOWING_PROGRESS, isLoading: isLoading, userID: userID}
 }
 
 export default usersReducer;
