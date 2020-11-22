@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api";
+
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -121,6 +123,25 @@ export const toggleIsLoading = (isLoading) => {
 export const toggleFollowingProgress = (isLoading, userID) => {
     return {type: TOGGLE_IS_FOLLOWING_PROGRESS, isLoading: isLoading, userID: userID}
 }
+
+
+
+
+export const getUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsLoading(true));
+        
+        usersAPI.getUsers(currentPage, pageSize).then((response) => {
+          dispatch(toggleIsLoading(false));
+          dispatch(setUsers(response.items));
+          dispatch(setTotalUsersCount(response.totalCount));
+        });
+    }
+}
+
+
+
+
 
 export default usersReducer;
 

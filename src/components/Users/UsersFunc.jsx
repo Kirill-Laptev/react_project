@@ -60,7 +60,6 @@ const UsersFunc = (props) => {
                           }
                          
                           props.toggleFollowingProgress(false, user.id);
-                          debugger;
                         })
                       }}>
                         Follow
