@@ -15,7 +15,6 @@ export const usersAPI = {
     getUsers(currentPage, pageSize) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}`)
         .then((response) => {
-          debugger;
             return response.data; 
         }) 
     },
@@ -24,5 +23,16 @@ export const usersAPI = {
     },
     followRequest(userID){
         return instance.post(`follow/${userID}`);
+    },
+    getUserProfile(userID){
+        return instance.get(`profile/${userID}`)
+    },
+}
+
+
+
+export const authAPI = {
+    getAuth(){
+        return instance.get(`auth/me`);
     }
 }
