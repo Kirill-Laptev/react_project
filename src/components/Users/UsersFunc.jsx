@@ -11,7 +11,7 @@ const UsersFunc = (props) => {
 
     let pages = [];
 
-    for(let i = 1; i <= pagesCount; i++){  // Временно выводим 20 страниц
+    for(let i = 1; i <= 20; i++){  // Временно выводим 20 страниц
       pages.push(i);
     }
 
@@ -39,28 +39,14 @@ const UsersFunc = (props) => {
                     <div>
                       {user.followed 
                         ? (<button disabled={props.followingInProgress.some(id => id === user.id)} onClick={() => {
-                          props.toggleFollowingProgress(true, user.id);
-                          usersAPI.unfollowRequest('follow/', user.id)
-                          .then((response) => {
-                            if(response.data.resultCode === 0){
-                              props.unfollow(user.id);
-                            }
-                            props.toggleFollowingProgress(false, user.id);
-                          })
+                          props.unfollowSuccess(user.id);
                           
                         }}>
                           Unfollow
                         </button>)
                       :  (<button disabled={props.followingInProgress.some(id => id === user.id)} onClick={() => {
-                        props.toggleFollowingProgress(true, user.id);
-                        usersAPI.followRequest('follow/', user.id)
-                        .then((response) => {
-                          if(response.data.resultCode === 0){
-                            props.follow(user.id)
-                          }
-                         
-                          props.toggleFollowingProgress(false, user.id);
-                        })
+                        props.followSuccess(user.id);
+
                       }}>
                         Follow
                       </button>)

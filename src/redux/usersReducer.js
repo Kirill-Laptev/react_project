@@ -139,6 +139,43 @@ export const getUsersThunkCreator = (currentPage, pageSize) => {
     }
 }
 
+export const followSuccessThunkCreator = (userID) => {
+  return (dispatch) => {
+    dispatch(toggleFollowingProgress(true, userID));
+
+    usersAPI.followRequest(userID).then((response) => {
+      if (response.data.resultCode === 0) {
+         dispatch(follow(userID));
+      }
+
+      dispatch(toggleFollowingProgress(false, userID));
+    })
+  }
+}
+
+
+                        
+
+export const unfollowSuccessThunkCreator = (userID) => {
+    return (dispatch) => {
+        dispatch(toggleFollowingProgress(true, userID));
+
+        usersAPI.unfollowRequest(userID)
+        .then((response) => {
+            if(response.data.resultCode === 0){
+              dispatch(unfollow(userID))
+            }
+            dispatch(toggleFollowingProgress(false, userID)) ;
+        })
+    }   
+}
+
+
+
+
+
+                      
+                         
 
 
 

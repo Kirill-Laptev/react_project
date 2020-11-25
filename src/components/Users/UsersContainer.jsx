@@ -1,13 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, unfollow, setUsers, setCurrentPage, setTotalUsersCount, toggleIsLoading, toggleFollowingProgress, getUsersThunkCreator } from '../../redux/usersReducer';
-import * as axios from 'axios';
+import { follow, unfollow, setCurrentPage, toggleFollowingProgress, getUsersThunkCreator, followSuccessThunkCreator, unfollowSuccessThunkCreator } from '../../redux/usersReducer';
 import UsersFunc from './UsersFunc';
 import Preloader from '../common/Preloader/Preloader';
 
 
 
-class UsersComponentAPI extends React.Component {
+class UsersContainer extends React.Component {
   
   
     componentDidMount() {
@@ -16,7 +15,7 @@ class UsersComponentAPI extends React.Component {
 
 
   onPageChanged = (pageNumber) => {
-    this.props.setCurrentPage(pageNumber);
+    // this.props.setCurrentPage(pageNumber);
     this.props.getUsers(pageNumber, this.props.pageSize);   
   }
 
@@ -31,11 +30,10 @@ class UsersComponentAPI extends React.Component {
     currentPage={this.props.currentPage}
     onPageChanged={this.onPageChanged}
     usersData={this.props.usersData}
-    unfollow={this.props.unfollow}
-    follow={this.props.follow}
     isLoading={this.props.isLoading}
     followingInProgress={this.props.followingInProgress}
-    toggleFollowingProgress={this.props.toggleFollowingProgress}
+    followSuccess={this.props.followSuccess}
+    unfollowSuccess={this.props.unfollowSuccess}
      />
       </>
   } 
@@ -58,12 +56,14 @@ let mapStateToProps = (state) => {
 
 
 
-const UsersContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
         follow,
         unfollow,
         setCurrentPage,
         toggleFollowingProgress,
         getUsers: getUsersThunkCreator,
-      })(UsersComponentAPI);
+        followSuccess: followSuccessThunkCreator,
+        unfollowSuccess: unfollowSuccessThunkCreator,
 
-export default UsersContainer;
+      })(UsersContainer);
+
