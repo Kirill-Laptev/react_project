@@ -30,9 +30,7 @@ const Dialogs = (props) => {
   }
 
 
- if(props.isAuth === false){
-   return <Redirect to={'/login'} />
- }
+ 
 
 
   return (
