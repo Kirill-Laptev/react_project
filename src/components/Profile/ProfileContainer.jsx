@@ -40,7 +40,7 @@ export default compose(
   connect(mapStateToProps, {
     getProfile: getProfileThunkCreator}),
   withRouter,
-  withAuthRedirect
+  //withAuthRedirect
 )(ProfileContainer)
 
 
