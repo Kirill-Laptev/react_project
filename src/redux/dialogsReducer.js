@@ -1,5 +1,4 @@
 const ADD_DIALOGS_POST = 'ADD-DIALOGS-POST';
-const UPDATE_DIALOGS_POST_TEXT = 'UPDATE-DIALOGS-POST-TEXT';
 
 let initialState = {
   dialogsData: [
@@ -18,7 +17,6 @@ let initialState = {
     { text: "Yo" },
     { text: "Yo" },
   ],
-  newPostText: "Hello",
 };
 
 
@@ -28,24 +26,13 @@ const dialogsReducer = (state = initialState, action) => {
 
   switch (action.type) {
 
-    case UPDATE_DIALOGS_POST_TEXT:   
-
-      return {
-        ...state,
-        newPostText: action.newText
-      };
-
     case ADD_DIALOGS_POST: 
-
-    let newPost = state.newPostText;
 
     return {
       ...state,
-      newPostText: '',
-      messagesData: [...state.messagesData, {text: newPost}],  
+      messagesData: [...state.messagesData, {text: action.newMessage}],  
 
     }
-
 
     default:
       return state;
@@ -54,14 +41,9 @@ const dialogsReducer = (state = initialState, action) => {
 
 
 
-export const addDialogsPostActionCreator = () => {
-  return {type: ADD_DIALOGS_POST}
+export const addDialogsPost = (newMessage) => {
+  return {type: ADD_DIALOGS_POST, newMessage}
 }
-
-export const updateDialogsPostTextActionCreator = (text) => {
-  return {type: UPDATE_DIALOGS_POST_TEXT, newText: text}
-}
-
 
 
 export default dialogsReducer;

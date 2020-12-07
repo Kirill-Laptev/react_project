@@ -42,6 +42,15 @@ export const getAuthUserDataThunkCreator = () => {
     }
 }
 
+export const loginTC = (formData) => {
+    return (dispatch) => {
+        authAPI.login(formData.email, formData.password, formData.rememberMe)
+        .then((response) => {
+            console.log(response.data.resultCode)
+        })
+    }
+}
+
 export default authReducer; 
 
 

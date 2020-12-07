@@ -24,23 +24,15 @@ const profileReducer = (state = initialState, action) => {
     case ADD_POST: 
 
     let newPost = {
-      message: state.newPostText,
+      message: action.newMessage,
       likeCounts: 0,
     };
 
     return {
       ...state,
       postsData: [...state.postsData, newPost],
-      newPostText: '',
     }
     
-    
-    case UPDATE_NEW_POST_TEXT:
-
-      return {
-        ...state,
-        newPostText: action.newText,
-      }
 
     case SET_USER_PROFILE: 
       return {
@@ -62,13 +54,10 @@ const profileReducer = (state = initialState, action) => {
 
 
 
-export const addPostActionCreator = () => {
-  return { type: ADD_POST };
+export const addPost = (newMessage) => {
+  return {type: ADD_POST, newMessage};
 };
-
-export const postChangeActionCreator = (text) => {
-  return { type: UPDATE_NEW_POST_TEXT, newText: text };
-}; 
+ 
 
 export const setUserProfile = (userProfile) => {
   return {type: SET_USER_PROFILE, userProfile: userProfile}

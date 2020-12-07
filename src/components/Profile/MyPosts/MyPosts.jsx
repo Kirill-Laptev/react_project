@@ -1,21 +1,15 @@
 import React from 'react';
 import classes from './MyPosts.module.css';
 import Post from './Post/Post';
+import ProfileAddMessageReduxForm from './MyPostsForm';
 
 
 
 const MyPosts = (props) => {
 
-  let addNewPost = React.createRef();
-
   
-  let onPostChange = () => {
-    let text = addNewPost.current.value; 
-    props.updateNewPostText(text);
-  }
-  
-  let onAddPost = () => {
-    props.addPost();  
+  let addNewPost = (values) => {
+    props.addPost(values.newMessage);  
   };
 
   
@@ -28,12 +22,7 @@ const MyPosts = (props) => {
     <div className={classes.myposts}>
       My posts
       <div className={classes.newpost}>
-        <div>
-          <textarea onChange={onPostChange} ref={addNewPost} value={props.newPostText}></textarea>
-        </div>
-        <div>
-          <button onClick={onAddPost}>Add post</button>
-        </div>
+        <ProfileAddMessageReduxForm onSubmit={addNewPost} />
       </div>
       <div className={classes.posts}>{postsElements}</div>
     </div>
