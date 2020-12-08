@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getUsersThunkCreator, followSuccessThunkCreator, unfollowSuccessThunkCreator } from '../../redux/usersReducer';
 import UsersFunc from './UsersFunc';
-import Preloader from '../common/Preloader/Preloader';
+import Preloader from '../../common/Preloader/Preloader'
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
