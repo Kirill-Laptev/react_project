@@ -15,7 +15,6 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true  // Если пришли данные, то isAuth будет true
             }
         
         default:
@@ -24,8 +23,8 @@ const authReducer = (state = initialState, action) => {
 }
 
 
-export const setAuthUserData = (id, login, email) => {
-    return{ type: SET_USER_DATA, data: {id, login, email} }
+export const setAuthUserData = (id, login, email, isAuth) => {
+    return{ type: SET_USER_DATA, data: {id, login, email, isAuth} }
 }
 
 
@@ -36,17 +35,31 @@ export const getAuthUserDataThunkCreator = () => {
         .then((response) => {
             if(response.data.resultCode === 0){
                 let {id, login, email} = response.data.data;
-                dispatch(setAuthUserData(id, login, email));
+                dispatch(setAuthUserData(id, login, email, true));
             }
         })
     }
 }
 
-export const loginTC = (formData) => {
+export const loginTC = (email, password, rememberMe) => {
     return (dispatch) => {
-        authAPI.login(formData.email, formData.password, formData.rememberMe)
+        authAPI.login(email, password, rememberMe)
         .then((response) => {
-            console.log(response.data.resultCode)
+            if(response.data.resultCode === 0){
+                dispatch(getAuthUserDataThunkCreator())
+            }
+        })
+    }
+}
+
+export const logoutTC = () => {
+    return (dispatch) => {
+        authAPI.logout()
+        .then((response) => {
+            if(response.data.resultCode === 0){
+                dispatch(getAuthUserDataThunkCreator())
+                dispatch(setAuthUserData(null, null, null, false)); 
+            }
         })
     }
 }
