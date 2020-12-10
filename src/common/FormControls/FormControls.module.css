@@ -9,3 +9,8 @@
 .formControl.error input{
     border: 1px solid red;
 }
+
+.formSummuryError{
+    border: 1px solid red;
+    color: red;
+}
