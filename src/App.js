@@ -10,14 +10,27 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
+import { connect } from 'react-redux';
+import { inizializeAppTC } from './redux/appReducer';
+import Preloader from './common/Preloader/Preloader';
 
 
-const App = (props) => {
-  return (
-    
+class App extends React.Component {
+
+  componentDidMount() {
+    this.props.initializeApp()
+ }
+
+  render(){
+
+    if(!this.props.initialized){
+  		return <Preloader />
+  	}
+
+    return (
       <div className="app-wrapper">
         <HeaderContainer />
-        <Navbar state={props.state} />
+        <Navbar  />
         <div className="app-wrapper-content">
           <Route path='/dialogs' render={ () => <DialogsContainer /> } />
           <Route path='/profile/:userID?' render={ () => <ProfileContainer /> } />
@@ -28,8 +41,14 @@ const App = (props) => {
           <Route path='/login' render={() => <Login />} />
         </div>
       </div>
-    
   );
+  }
 }
 
-export default App;
+let mapStateToProps = (state) => {
+  return{
+    initialized: state.app.initialized
+  }
+}
+
+export default connect(mapStateToProps, {initializeApp: inizializeAppTC})(App)

@@ -32,7 +32,7 @@ export const setAuthUserData = (id, login, email, isAuth) => {
 
 export const getAuthUserDataThunkCreator = () => {
     return (dispatch) => {
-        authAPI.getAuth()
+        return authAPI.getAuth()
         .then((response) => {
             if(response.data.resultCode === 0){
                 let {id, login, email} = response.data.data;
@@ -40,6 +40,7 @@ export const getAuthUserDataThunkCreator = () => {
             }
         })
     }
+    return 'completed';
 }
 
 export const loginTC = (email, password, rememberMe) => {
