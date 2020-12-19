@@ -10,7 +10,6 @@ import style from '../../common/FormControls/FormControls.module.css'
 
 
 const LoginForm = (props) => {
-    console.log('rerender');
     return (
             <form onSubmit={props.handleSubmit}>
                 <div><Field placeholder='Login' name='email' component={Input} validate={[requiredField]}/></div>

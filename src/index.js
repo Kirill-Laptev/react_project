@@ -6,6 +6,12 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import store from './redux/redux-store';
 import { Provider } from 'react-redux';
+import { fake } from './redux/profileReducer';
+
+
+  setInterval(() => {
+    store.dispatch(fake())
+  }, 1000)
 
 
   ReactDOM.render(

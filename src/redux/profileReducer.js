@@ -4,6 +4,7 @@ const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
+const FAKE = 'FAKE';
 
 
 let initialState = {
@@ -16,6 +17,7 @@ let initialState = {
   newPostText: "Hello, man!",
   userProfile: null,
   status: '',
+  fakeNum: 10,
 };
 
 
@@ -44,6 +46,12 @@ const profileReducer = (state = initialState, action) => {
       return {
         ...state,
         status: action.status,
+      }
+    
+      case FAKE: 
+      return {
+        ...state,
+        fakeNum: state.fakeNum + 1
       }
 
       
@@ -98,6 +106,11 @@ export const updateUserStatusTC = (status) => {
       }
     })
   }
+}
+
+
+export const fake = () => {
+  return {type: FAKE}
 }
 
 

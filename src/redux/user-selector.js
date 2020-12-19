@@ -1,3 +1,5 @@
+import { createSelector } from "reselect"
+
 export const getUsersData = (state) => {
     return state.usersPage.usersData
 }
@@ -21,3 +23,11 @@ export const getIsLoading = (state) => {
 export const getFollowingInProgress = (state) => {
     return state.usersPage.followingInProgress
 }
+
+
+
+
+
+export const getUsersDataSuper = createSelector( getUsersData, (users) => {
+    return users.filter((user) => true)
+})
