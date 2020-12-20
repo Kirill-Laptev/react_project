@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './ProfileInfo.module.css'
-import ProfileStatus from './ProfileStatus';
+import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 import Preloader from '../../../common/Preloader/Preloader'
 
 
@@ -18,7 +18,7 @@ const ProfileInfo = (props) => {
         src="https://img4.goodfon.ru/original/2560x1440/5/a5/react-framework-logo.jpg"
         alt="main-img"
       /> */}
-      <ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/>
+      <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus}/>
       <div className={styles.profileAvatar}><img src={props.userProfile.photos.large} /></div>
       <div>About Me</div>
       <div>Contacts</div>
