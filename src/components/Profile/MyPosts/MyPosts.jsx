@@ -5,28 +5,39 @@ import ProfileAddMessageReduxForm from './MyPostsForm';
 
 
 
-const MyPosts = (props) => {
 
-  
-  let addNewPost = (values) => {
-    props.addPost(values.newMessage);  
+class MyPosts extends React.PureComponent {
+
+  componentDidMount(){
+    setTimeout(() => {
+      this.setState({a: 12});
+    }, 3000)
+  }
+ 
+
+  // shouldCoponentUpdate(nextProps, nextState){
+  //   return nextProps !== this.props || nextState !== this.state
+  // }
+
+  addNewPost = (values) => {
+    this.props.addPost(values.newMessage);  
   };
 
   
-  let postsElements = props.posts.map((el) => {
+  render(){
+    console.log('render')
+    return <div className={classes.myposts}>
+        My posts
+        <div className={classes.newpost}>
+          <ProfileAddMessageReduxForm onSubmit={this.addNewPost} />
+        </div>
+        <div className={classes.posts}>{this.props.posts.map((el) => {
     return <Post message={el.message} likeCounts={el.likeCounts} />
-  });
-  
-
-  return (
-    <div className={classes.myposts}>
-      My posts
-      <div className={classes.newpost}>
-        <ProfileAddMessageReduxForm onSubmit={addNewPost} />
+    })}</div>
       </div>
-      <div className={classes.posts}>{postsElements}</div>
-    </div>
-  );
+    
+  }
+  
 };
 
 export default MyPosts;

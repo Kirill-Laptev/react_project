@@ -9,9 +9,9 @@ import { Provider } from 'react-redux';
 import { fake } from './redux/profileReducer';
 
 
-  setInterval(() => {
-    store.dispatch(fake())
-  }, 1000)
+  // setInterval(() => {
+  //   store.dispatch(fake())
+  // }, 1000)
 
 
   ReactDOM.render(
