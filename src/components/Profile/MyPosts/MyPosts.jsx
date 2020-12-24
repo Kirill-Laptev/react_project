@@ -18,6 +18,7 @@ class MyPosts extends React.PureComponent {
   // shouldCoponentUpdate(nextProps, nextState){
   //   return nextProps !== this.props || nextState !== this.state
   // }
+  
 
   addNewPost = (values) => {
     this.props.addPost(values.newMessage);  
