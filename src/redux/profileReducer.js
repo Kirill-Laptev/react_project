@@ -5,6 +5,7 @@ const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 // const FAKE = 'FAKE';
+const DELETE_POST = 'DELETE_POST';
 
 
 let initialState = {
@@ -54,6 +55,12 @@ const profileReducer = (state = initialState, action) => {
       //   fakeNum: state.fakeNum + 1
       // }
 
+      case DELETE_POST :
+        return{
+          ...state,
+          postsData: state.postsData.filter(post => post.id !== action.postID)
+        }
+
       
     default:
       return state;
@@ -74,6 +81,11 @@ export const setUserProfile = (userProfile) => {
 
 export const setStatus = (status) => {
   return {type: SET_STATUS, status: status}
+}
+
+
+export const deletePost = (postID) => {
+  return{type: 'DELETE_POST', postID}
 }
 
 
