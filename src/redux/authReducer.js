@@ -31,41 +31,38 @@ export const setAuthUserData = (id, login, email, isAuth) => {
 
 
 export const getAuthUserDataThunkCreator = () => {
-    return (dispatch) => {
-        return authAPI.getAuth()
-        .then((response) => {
-            if(response.data.resultCode === 0){
-                let {id, login, email} = response.data.data;
-                dispatch(setAuthUserData(id, login, email, true));
-            }
-        })
+    return async (dispatch) => {
+        let response = await authAPI.getAuth();
+        
+        if(response.data.resultCode === 0){
+            let {id, login, email} = response.data.data;
+            dispatch(setAuthUserData(id, login, email, true));
+        }
     }
     return 'completed';
 }
 
 export const loginTC = (email, password, rememberMe) => {
-    return (dispatch) => {
-        authAPI.login(email, password, rememberMe)
-        .then((response) => {
-            if(response.data.resultCode === 0){
-                dispatch(getAuthUserDataThunkCreator())
-            } else{
-                let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
-                dispatch(stopSubmit('login', {_error: message}))
-            }
-        })
+    return async (dispatch) => {
+        let response = await authAPI.login(email, password, rememberMe)
+        
+        if(response.data.resultCode === 0){
+            dispatch(getAuthUserDataThunkCreator())
+        } else{
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
+            dispatch(stopSubmit('login', {_error: message}))
+        }
     }
 }
 
 export const logoutTC = () => {
-    return (dispatch) => {
-        authAPI.logout()
-        .then((response) => {
+    return async (dispatch) => {
+        let response = await authAPI.logout()
+        
             if(response.data.resultCode === 0){
                 dispatch(getAuthUserDataThunkCreator())
                 dispatch(setAuthUserData(null, null, null, false)); 
             }
-        })
     }
 }
 

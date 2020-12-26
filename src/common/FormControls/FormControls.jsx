@@ -3,26 +3,26 @@ import styles from './FormControls.module.css'
 
 
 
-export const Textarea = ({input, meta, ...props}) => {
+export const Textarea = ({input, meta: {touched, error}, ...props}) => {
 
-    const hasError = meta.touched && meta.error;
+    const hasError = touched && error;
 
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
-            {hasError ? <span>{meta.error}</span> : ''}
+            {hasError ? <span>{error}</span> : ''}
             <div><textarea {...input} {...props}/></div>
         </div>
     )
 }
 
 
-export const Input = ({input, meta, ...props}) => {
+export const Input = ({input, meta: {touched, error}, ...props}) => {
 
-    const hasError = meta.touched && meta.error;
+    const hasError = touched && error;
 
     return(
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
-            {hasError ? <span>{meta.error}</span> : ''}
+            {hasError ? <span>{error}</span> : ''}
             <div><input {...input} {...props}/></div>
         </div>
     )

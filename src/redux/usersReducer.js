@@ -128,46 +128,58 @@ export const toggleFollowingProgress = (isLoading, userID) => {
 
 
 export const getUsersThunkCreator = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsLoading(true));
         dispatch(setCurrentPage(currentPage))
         
-        usersAPI.getUsers(currentPage, pageSize).then((response) => {
-          dispatch(toggleIsLoading(false));
-          dispatch(setUsers(response.items));
-          dispatch(setTotalUsersCount(response.totalCount));
-        });
+        let response = await usersAPI.getUsers(currentPage, pageSize)
+        
+        dispatch(toggleIsLoading(false));
+        dispatch(setUsers(response.items));
+        dispatch(setTotalUsersCount(response.totalCount));
+    
     }
 }
 
-export const followSuccessThunkCreator = (userID) => {
-  return (dispatch) => {
+
+
+
+// Создали функцию для Thunk Creator чтобы не дублировался код
+
+const followUnfollowFlow = async (dispatch, userID, apiMethod, actionCreator) => {
+	 
     dispatch(toggleFollowingProgress(true, userID));
 
-    usersAPI.followRequest(userID).then((response) => {
-      if (response.data.resultCode === 0) {
-         dispatch(follow(userID));
-      }
+    let response = await apiMethod(userID)
+    
+    if(response.data.resultCode === 0){
+        dispatch(actionCreator(userID))
+    }
+    dispatch(toggleFollowingProgress(false, userID)) ;
 
-      dispatch(toggleFollowingProgress(false, userID));
-    })
-  }
 }
 
 
-                        
+
+
+export const followSuccessThunkCreator = (userID) => {
+    return async (dispatch) => {
+
+    let apiMethod = usersAPI.followRequest.bind(usersAPI)
+
+    followUnfollowFlow(dispatch, userID, apiMethod, follow)
+    
+    }
+}
+
 
 export const unfollowSuccessThunkCreator = (userID) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingProgress(true, userID));
+return async (dispatch) => {
 
-        usersAPI.unfollowRequest(userID)
-        .then((response) => {
-            if(response.data.resultCode === 0){
-              dispatch(unfollow(userID))
-            }
-            dispatch(toggleFollowingProgress(false, userID)) ;
-        })
+    let apiMethod = usersAPI.unfollowRequest.bind(usersAPI)
+
+    followUnfollowFlow(dispatch, userID, apiMethod, unfollow)
+    
     }   
 }
 

@@ -4,9 +4,9 @@ import ProfileStatusWithHooks from './ProfileStatusWithHooks';
 import Preloader from '../../../common/Preloader/Preloader'
 
 
-const ProfileInfo = (props) => {
+const ProfileInfo = ({userProfile, status, updateUserStatus}) => {
 
-  if(props.userProfile === null || props.userProfile === undefined){
+  if(userProfile === null || userProfile === undefined){
     return (
       <Preloader />
     )
@@ -18,8 +18,8 @@ const ProfileInfo = (props) => {
         src="https://img4.goodfon.ru/original/2560x1440/5/a5/react-framework-logo.jpg"
         alt="main-img"
       /> */}
-      <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus}/>
-      <div className={styles.profileAvatar}><img src={props.userProfile.photos.large} /></div>
+      <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
+      <div className={styles.profileAvatar}><img src={userProfile.photos.large} /></div>
       <div>About Me</div>
       <div>Contacts</div>
       <div className={styles.lastDescription}>More description</div>

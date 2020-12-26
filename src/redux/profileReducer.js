@@ -91,34 +91,31 @@ export const deletePost = (postID) => {
 
 
 export const getProfileThunkCreator = (userID) => {
-  return (dispatch) => {
-    profileAPI.getUserProfile(userID)   
-    .then((response) => {
-      dispatch(setUserProfile(response.data))
-    }) 
+  return async (dispatch) => {
+    let response = await profileAPI.getUserProfile(userID)   
+    
+    dispatch(setUserProfile(response.data))
   }
 }
 
 
 export const getUserStatusTC = (userID) => {
-  return (dispatch) => {
-    profileAPI.getStatus(userID)
-    .then((response) => {
-      dispatch(setStatus(response.data))
-    }) 
+  return async (dispatch) => {
+    let response = await profileAPI.getStatus(userID)
+    
+    dispatch(setStatus(response.data))
   }
 }
 
 export const updateUserStatusTC = (status) => {
-  return (dispatch) => {
-    profileAPI.updateStatus(status)
-    .then((response) => {
-      if(response.data.resultCode === 0){
-        dispatch(setStatus(status))
-      }
-    })
+  return async (dispatch) => {
+    let response = await profileAPI.updateStatus(status)
+
+    if(response.data.resultCode === 0){
+      dispatch(setStatus(status))
+    }
   }
-}
+} 
 
 
 // export const fake = () => {
