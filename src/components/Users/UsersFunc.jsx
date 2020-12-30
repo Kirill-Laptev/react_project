@@ -12,13 +12,16 @@ const UsersFunc = ({currentPage, onPageChanged, totalUsersCount, pageSize, ...pr
   // В данном рефакторинге деструктуризация использована местами,
   // скорее всего она здесь не совсем уместна.
 
+  let portionSize;
+
     return (
       <div>
         <Paginator 
         currentPage={currentPage}
         onPageChanged={onPageChanged}
-        totalUsersCount={totalUsersCount}
-        pageSize={pageSize} />
+        totalItemsCount={totalUsersCount}
+        pageSize={pageSize}
+        portionSize={portionSize} />
 
         <div>
         {props.usersData.map((user) => <User
