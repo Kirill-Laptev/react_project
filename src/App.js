@@ -4,7 +4,7 @@ import Navbar from './components/Navbar/Navbar';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings _/Settings';
-import { Route, BrowserRouter, HashRouter } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
@@ -57,11 +57,11 @@ const AppContainer = connect(mapStateToProps, {initializeApp: inizializeAppTC})(
 
 const MainApp = (props) => {
   return(
-    <HashRouter>
+    <BrowserRouter>
     <Provider store={store}>
       <AppContainer />
       </Provider>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 
