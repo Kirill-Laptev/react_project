@@ -13,4 +13,5 @@
 .formSummuryError{
     border: 1px solid red;
     color: red;
+    font-size: 18px;
 }

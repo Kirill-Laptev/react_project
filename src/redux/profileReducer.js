@@ -1,13 +1,13 @@
 import { profileAPI } from "../api/api";
+import { stopSubmit } from "redux-form";
 
-const ADD_POST = 'ADD-POST';
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-const SET_USER_PROFILE = 'SET_USER_PROFILE';
-const SET_STATUS = 'SET_STATUS';
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_STATUS = "SET_STATUS";
 // const FAKE = 'FAKE';
-const DELETE_POST = 'DELETE_POST';
-const SAVE_PHOTO_SUCCESS = 'SAVE_PHOTO_SUCCESS';
-
+const DELETE_POST = "DELETE_POST";
+const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
 let initialState = {
   postsData: [
@@ -18,115 +18,103 @@ let initialState = {
   ],
   newPostText: "Hello, man!",
   userProfile: null,
-  status: '',
+  status: "",
   fakeNum: 10,
 };
 
-
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_POST: 
+    case ADD_POST:
+      let newPost = {
+        message: action.newMessage,
+        likeCounts: 0,
+      };
 
-    let newPost = {
-      message: action.newMessage,
-      likeCounts: 0,
-    };
+      return {
+        ...state,
+        postsData: [...state.postsData, newPost],
+      };
 
-    return {
-      ...state,
-      postsData: [...state.postsData, newPost],
-    }
-    
-
-    case SET_USER_PROFILE: 
+    case SET_USER_PROFILE:
       return {
         ...state,
         userProfile: action.userProfile,
-      }
+      };
 
-    case SET_STATUS : 
+    case SET_STATUS:
       return {
         ...state,
         status: action.status,
-      }
-    
-      // case FAKE: 
-      // return {
-      //   ...state,
-      //   fakeNum: state.fakeNum + 1
-      // }
+      };
 
-      case DELETE_POST :
-        return{
-          ...state,
-          postsData: state.postsData.filter(post => post.id !== action.postID)
-        }
-      
-      case SAVE_PHOTO_SUCCESS :
-        return {
-          ...state,
-          userProfile: {...state.userProfile, photos: action.photos}
-        }
-      
+    // case FAKE:
+    // return {
+    //   ...state,
+    //   fakeNum: state.fakeNum + 1
+    // }
+
+    case DELETE_POST:
+      return {
+        ...state,
+        postsData: state.postsData.filter((post) => post.id !== action.postID),
+      };
+
+    case SAVE_PHOTO_SUCCESS:
+      return {
+        ...state,
+        userProfile: { ...state.userProfile, photos: action.photos },
+      };
+
     default:
       return state;
   }
 };
 
-
-
 export const addPost = (newMessage) => {
-  return {type: ADD_POST, newMessage};
+  return { type: ADD_POST, newMessage };
 };
- 
 
 export const setUserProfile = (userProfile) => {
-  return {type: SET_USER_PROFILE, userProfile: userProfile}
-}
-
+  return { type: SET_USER_PROFILE, userProfile: userProfile };
+};
 
 export const setStatus = (status) => {
-  return {type: SET_STATUS, status: status}
-}
-
+  return { type: SET_STATUS, status: status };
+};
 
 export const deletePost = (postID) => {
-  return{type: 'DELETE_POST', postID}
-}
+  return { type: "DELETE_POST", postID };
+};
 
 export const savePhotoSuccess = (photos) => {
-  return {type: SAVE_PHOTO_SUCCESS, photos}
-}
-
-
+  return { type: SAVE_PHOTO_SUCCESS, photos };
+};
 
 export const getProfileThunkCreator = (userID) => {
   return async (dispatch) => {
-    let response = await profileAPI.getUserProfile(userID)   
-    
-    dispatch(setUserProfile(response.data))
-  }
-}
+    let response = await profileAPI.getUserProfile(userID);
 
+    dispatch(setUserProfile(response.data));
+  };
+};
 
 export const getUserStatusTC = (userID) => {
   return async (dispatch) => {
-    let response = await profileAPI.getStatus(userID)
-    
-    dispatch(setStatus(response.data))
-  }
-}
+    let response = await profileAPI.getStatus(userID);
+
+    dispatch(setStatus(response.data));
+  };
+};
 
 export const updateUserStatusTC = (status) => {
   return async (dispatch) => {
-    let response = await profileAPI.updateStatus(status)
+    let response = await profileAPI.updateStatus(status);
 
-    if(response.data.resultCode === 0){
-      dispatch(setStatus(status))
+    if (response.data.resultCode === 0) {
+      dispatch(setStatus(status));
     }
-  }
-} 
-
+  };
+};
 
 // export const fake = () => {
 //   return {type: FAKE}
@@ -134,14 +122,30 @@ export const updateUserStatusTC = (status) => {
 
 export const savePhotoTC = (file) => {
   return (dispatch) => {
-    profileAPI.savePhoto(file)
-    .then((response) => {
-       if(response.data.resultCode === 0){
-         dispatch(savePhotoSuccess(response.data.data.photos))
-       }
-    }) 
-  }
-}
+    profileAPI.savePhoto(file).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(savePhotoSuccess(response.data.data.photos));
+      }
+    });
+  };
+};
 
+
+export const sendProfileInfoTC = (profileInfo) => {
+  return (dispatch, getState) => {
+    const userID = getState().auth.id;
+
+    return profileAPI.saveProfileInfo(profileInfo).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(getProfileThunkCreator(userID));
+      } else {
+        dispatch(
+          stopSubmit("edit-profile", { _error: response.data.messages[0] })
+        );
+        return Promise.reject(response.data.messages[0]);
+      }
+    });
+  };
+};
 
 export default profileReducer;

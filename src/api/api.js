@@ -60,5 +60,8 @@ export const profileAPI = {
                 'Content-type': 'multipart/form-data'
             }
         })
+    },
+    saveProfileInfo(profileInfo){
+        return instance.put(`/profile`, profileInfo)
     }
 }

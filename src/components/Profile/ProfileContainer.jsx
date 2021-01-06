@@ -1,7 +1,7 @@
 import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import {getProfileThunkCreator, getUserStatusTC, updateUserStatusTC, savePhotoTC} from '../../redux/profileReducer';
+import {getProfileThunkCreator, getUserStatusTC, updateUserStatusTC, savePhotoTC, sendProfileInfoTC} from '../../redux/profileReducer';
 import { withRouter, Redirect } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'; // Используем другой аналог редиректа history.push('/login') 
 import { compose } from 'redux';
@@ -68,7 +68,8 @@ export default compose(
     getUserProfile: getProfileThunkCreator,
     getUserStatus: getUserStatusTC,
     updateUserStatus: updateUserStatusTC,
-    savePhoto: savePhotoTC}),
+    savePhoto: savePhotoTC,
+    sendProfileInfo: sendProfileInfoTC}),
   withRouter,
   //withAuthRedirect
 )(ProfileContainer)
