@@ -9,13 +9,16 @@ import style from '../../common/FormControls/FormControls.module.css'
 
 
 
-const LoginForm = ({handleSubmit, error}) => {
+const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     return (
             <form onSubmit={handleSubmit}>
                 <div><Field placeholder='Login' name='email' component={Input} validate={[requiredField]}/></div>
                 <div><Field type='password'placeholder='Password' name='password' component={Input} validate={[requiredField]}/></div>
                 <div><Field type='checkbox' name='rememberMe' component={Input}/>Remember Me</div>
                 <div><button>Login</button></div>
+                {captchaUrl ? <img src={captchaUrl} />: ''}
+                {captchaUrl ? <Field  placeholder='Symbols from image' name='captcha' component={Input} validate={[requiredField]} />: ''}
+
                 {error 
                 ? <div className={style.formSummuryError}>{error}</div>
                 : ''}
@@ -30,8 +33,8 @@ const ReduxLoginForm = reduxForm({
 
 
 const Login = (props) => {
-    const onSubmit = ({email, password, rememberMe}) => {
-        props.login(email, password, rememberMe)
+    const onSubmit = ({email, password, rememberMe, captcha}) => {
+        props.login(email, password, rememberMe, captcha)
     }
 
     return (
@@ -40,7 +43,7 @@ const Login = (props) => {
         ? <Redirect to={'/profile'} />
         : <div>
         <h1>Login</h1>
-        <ReduxLoginForm onSubmit={onSubmit} />
+        <ReduxLoginForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
     </div>}
     </>
     )
@@ -50,6 +53,7 @@ const Login = (props) => {
 const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
+        captchaUrl: state.auth.captchaUrl
     }
 }
 
